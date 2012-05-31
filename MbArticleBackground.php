@@ -37,7 +37,7 @@ class MbArticleBackground extends Backend
 		if($strTemplate == 'mod_article')
 		{
 			global $objPage;
-			$objArticles = $this->Database->prepare("SELECT alias,mb_articlebackground,mb_articlebackground_src,mb_articlebackground_position_x,mb_articlebackground_position_y,mb_articlebackground_repeat FROM tl_article WHERE pid=?")->execute($objPage->id);
+			$objArticles = $this->Database->prepare("SELECT alias,mb_articlebackground,mb_articlebackground_src,mb_articlebackground_position,mb_articlebackground_repeat FROM tl_article WHERE pid=?")->execute($objPage->id);
 			while($objArticles->next())
 			{
 				if($objArticles->mb_articlebackground)
