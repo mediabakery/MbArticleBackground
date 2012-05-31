@@ -38,14 +38,11 @@ $GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_src'] = array(
 	'Hintergrundbild',
 	'Hintergrundbild.'
 );
-$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_position_x'] = array(
-	'Position horizontal',
-	'Hintergrundposition horizontal.'
+$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_position'] = array(
+	'Position',
+	'Hintergrundposition.'
 );
-$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_position_y'] = array(
-	'Position vertikal',
-	'Hintergrundposition vertikal.'
-);
+
 $GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_repeat'] = array(
 	'Wiederholen',
 	'Hintergrundbild wiederholen.'

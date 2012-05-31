@@ -62,10 +62,8 @@ class MbArticleBackground extends Backend
 	private function getBackgroundStyle($obj)
 	{
 		$strStyle = '#' . $obj->alias . '{background-image:url(' . $obj->mb_articlebackground_src . ');';
-		if(strlen($obj->mb_articlebackground_position_x))
-			$strStyle .= 'background-position-x:' . $obj->mb_articlebackground_position_x . ';';
-		if(strlen($obj->mb_articlebackground_position_y))
-			$strStyle .= 'background-position-y:' . $obj->mb_articlebackground_position_y . ';';
+		if(strlen($obj->mb_articlebackground_position))
+			$strStyle .= 'background-position:' . $obj->mb_articlebackground_position . ';';
 		if(strlen($obj->mb_articlebackground_repeat))
 			$strStyle .= 'background-repeat:' . $obj->mb_articlebackground_repeat . ';';
 		$strStyle .= '}';

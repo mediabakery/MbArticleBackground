@@ -54,15 +54,8 @@ $GLOBALS['TL_DCA']['tl_article']['fields']['mb_articlebackground_src'] = array(
 	)
 );
 
-$GLOBALS['TL_DCA']['tl_article']['fields']['mb_articlebackground_position_x'] = array(
-	'label' => &$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_position_x'],
-	'exclude' => true,
-	'inputType' => 'text',
-	'eval' => array('maxlength' => 10,'tl_class'=>'w50')
-);
-
-$GLOBALS['TL_DCA']['tl_article']['fields']['mb_articlebackground_position_y'] = array(
-	'label' => &$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_position_y'],
+$GLOBALS['TL_DCA']['tl_article']['fields']['mb_articlebackground_position'] = array(
+	'label' => &$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground_position'],
 	'exclude' => true,
 	'inputType' => 'text',
 	'eval' => array('maxlength' => 10,'tl_class'=>'w50')
@@ -78,6 +71,6 @@ $GLOBALS['TL_DCA']['tl_article']['fields']['mb_articlebackground_repeat'] = arra
 		'repeat-y',
 		'no-repeat'
 	),
-	'eval' => array('includeBlankOption' => TRUE)
+	'eval' => array('includeBlankOption' => TRUE,'tl_class'=>'w50')
 );
 ?>
