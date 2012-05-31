@@ -37,17 +37,13 @@ class MbArticleBackground extends Backend
 		if($strTemplate == 'mod_article')
 		{
 			global $objPage;
-			$objArticles = $this->Database->prepare("SELECT alias,mb_articlebackground,mb_articlebackground_src FROM tl_article WHERE pid=?")->execute($objPage->id);
+			$objArticles = $this->Database->prepare("SELECT alias,mb_articlebackground,mb_articlebackground_src,mb_articlebackground_position_x,mb_articlebackground_position_y,mb_articlebackground_repeat FROM tl_article WHERE pid=?")->execute($objPage->id);
 			while($objArticles->next())
 			{
 				if($objArticles->mb_articlebackground)
-				{
-					$GLOBALS['TL_HEAD']['mb_articlebackground_' . $objArticles->alias] = '<style type="text/css">
-#' . $objArticles->alias . '{background-image:url(' . $objArticles->mb_articlebackground_src . ')}
-</style>';
-				}
+					$GLOBALS['TL_HEAD']['mb_articlebackground_' . $objArticles->alias] = '<style type="text/css">' . $this->getBackgroundStyle($objArticles) . '</style>';
 			}
-
+			$strContent = str_replace('class="mod_article', 'class="mod_article mb_articlebackground', $strContent);
 		}
 		return $strContent;
 	}
@@ -56,10 +52,24 @@ class MbArticleBackground extends Backend
 	{
 		if($objRow->mb_articlebackground)
 		{
-			$GLOBALS['TL_HEAD'][] = '<style type="text/css">
-#' . $objRow->alias . '{background-image:url(' . $objRow->mb_articlebackground_src . ')}
-</style>';
+			$arrCssID = deserialize($objRow->cssID);
+			$arrCssID[1] .= ' mb_articlebackground';
+			$objRow->cssID = serialize($arrCssID);
+			$GLOBALS['TL_HEAD'][] = '<style type="text/css">' . $this->getBackgroundStyle($objRow) . '</style>';
 		}
+	}
+
+	private function getBackgroundStyle($obj)
+	{
+		$strStyle = '#' . $obj->alias . '{background-image:url(' . $obj->mb_articlebackground_src . ');';
+		if(strlen($obj->mb_articlebackground_position_x))
+			$strStyle .= 'background-position-x:' . $obj->mb_articlebackground_position_x . ';';
+		if(strlen($obj->mb_articlebackground_position_y))
+			$strStyle .= 'background-position-y:' . $obj->mb_articlebackground_position_y . ';';
+		if(strlen($obj->mb_articlebackground_repeat))
+			$strStyle .= 'background-repeat:' . $obj->mb_articlebackground_repeat . ';';
+		$strStyle .= '}';
+		return $strStyle;
 	}
 
 }
