@@ -30,9 +30,29 @@ if(!defined('TL_ROOT'))
  * @filesource
  */
 
-class MbArticleBackground
+class MbArticleBackground extends Backend
 {
-	public function addBackgroundImage($objRow)
+	public function addBackgroundImageFrontendTemplate($strContent, $strTemplate)
+	{
+		if($strTemplate == 'mod_article')
+		{
+			global $objPage;
+			$objArticles = $this->Database->prepare("SELECT alias,mb_articlebackground,mb_articlebackground_src FROM tl_article WHERE pid=?")->execute($objPage->id);
+			while($objArticles->next())
+			{
+				if($objArticles->mb_articlebackground)
+				{
+					$GLOBALS['TL_HEAD']['mb_articlebackground_' . $objArticles->alias] = '<style type="text/css">
+#' . $objArticles->alias . '{background-image:url(' . $objArticles->mb_articlebackground_src . ')}
+</style>';
+				}
+			}
+
+		}
+		return $strContent;
+	}
+
+	public function addBackgroundImageArticle($objRow)
 	{
 		if($objRow->mb_articlebackground)
 		{
