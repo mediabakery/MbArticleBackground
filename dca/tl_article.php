@@ -32,7 +32,7 @@ if(!defined('TL_ROOT'))
 
 $GLOBALS['TL_DCA']['tl_article']['palettes']['__selector__'][] = 'mb_articlebackground';
 $GLOBALS['TL_DCA']['tl_article']['palettes']['default'] = str_replace(';{teaser_legend', ',mb_articlebackground;{teaser_legend', $GLOBALS['TL_DCA']['tl_article']['palettes']['default']);
-$GLOBALS['TL_DCA']['tl_article']['subpalettes']['mb_articlebackground'] = 'mb_articlebackground_src,mb_articlebackground_position_x,mb_articlebackground_position_y,mb_articlebackground_repeat';
+$GLOBALS['TL_DCA']['tl_article']['subpalettes']['mb_articlebackground'] = 'mb_articlebackground_src,mb_articlebackground_position,mb_articlebackground_repeat';
 
 $GLOBALS['TL_DCA']['tl_article']['fields']['mb_articlebackground'] = array(
 	'label' => &$GLOBALS['TL_LANG']['tl_article']['mb_articlebackground'],
