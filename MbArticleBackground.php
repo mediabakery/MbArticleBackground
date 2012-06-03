@@ -32,7 +32,8 @@ if(!defined('TL_ROOT'))
 
 class MbArticleBackground extends Backend
 {
-	public function addBackgroundImageFrontendTemplate($strContent, $strTemplate)
+
+	public function addBackgroundImage($strContent, $strTemplate)
 	{
 		if($strTemplate == 'mod_article')
 		{
@@ -41,26 +42,42 @@ class MbArticleBackground extends Backend
 			while($objArticles->next())
 			{
 				if($objArticles->mb_articlebackground)
-					$GLOBALS['TL_HEAD']['mb_articlebackground_' . $objArticles->alias] = '<style type="text/css">' . $this->getBackgroundStyle($objArticles) . '</style>';
+				{
+
+					$strContent = preg_replace('/class="mod_article(.*) id="' . $objArticles->alias . '"/', 'class="mod_article articlebackground$1 id="' . $objArticles->alias . '"', $strContent);
+					if(preg_match('/id="' . $objArticles->alias . '" style="(.*)"/', $strContent))
+					{
+						// This element has already a css inline-element
+						$strContent = preg_replace('/id="' . $objArticles->alias . '" style="(.*)"/', 'id="' . $objArticles->alias . '" style="' . $this->getBackgroundStyle($objArticles) . '$1"', $strContent);
+					}
+					else
+					{
+						// This element has no css inline-element
+						$strContent = preg_replace('/id="' . $objArticles->alias . '"/', 'id="' . $objArticles->alias . '" style="' . $this->getBackgroundStyle($objArticles) . '"', $strContent);
+					}
+				}
 			}
-			$strContent = str_replace('class="mod_article', 'class="mod_article mb_articlebackground', $strContent);
+		}
+		else
+		if($strTemplate == 'fe_page')
+		{
+			if(count($this->arrStyles) > 0)
+			{
+				$GLOBALS['TL_HEAD'][] = '<style type="text/css">' . implode('', $this->arrStyles) . '</style>';
+			}
 		}
 		return $strContent;
 	}
 
-	public function addBackgroundImageArticle($objRow)
-	{
-		if($objRow->mb_articlebackground)
-		{
-			$arrCssID = deserialize($objRow->cssID);
-			$arrCssID[1] .= ' mb_articlebackground';
-			$objRow->cssID = serialize($arrCssID);
-			$GLOBALS['TL_HEAD'][] = '<style type="text/css">' . $this->getBackgroundStyle($objRow) . '</style>';
-		}
-	}
-
 	private function getBackgroundStyle($obj)
 	{
+		$strStyle = 'background-image:url(' . $obj->mb_articlebackground_src . ');';
+		if(strlen($obj->mb_articlebackground_position))
+			$strStyle .= 'background-position:' . $obj->mb_articlebackground_position . ';';
+		if(strlen($obj->mb_articlebackground_repeat))
+			$strStyle .= 'background-repeat:' . $obj->mb_articlebackground_repeat . ';';
+		return $strStyle;
+
 		$strStyle = '#' . $obj->alias . '{background-image:url(' . $obj->mb_articlebackground_src . ');';
 		if(strlen($obj->mb_articlebackground_position))
 			$strStyle .= 'background-position:' . $obj->mb_articlebackground_position . ';';

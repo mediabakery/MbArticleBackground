@@ -29,9 +29,5 @@ if(!defined('TL_ROOT'))
  * @license    LGPL
  * @filesource
  */
-
-$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array(
-	'MbArticleBackground',
-	'addBackgroundImage'
-);
+array_insert($GLOBALS['TL_DCA']['tl_content']['list']['sorting']['headerFields'], 3, 'mb_articlebackground');
 ?>
